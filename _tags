@@ -2,5 +2,5 @@ true : bin_annot, safe_string, package(bytes)
 true: warn_error(+1..49), warn(A-4-41-44)
 
 <src>: include
-true: package(mirage-device)
-<src/mirage_net_lwt.*>: package(mirage-net lwt io-page cstruct ipaddr)
+true: package(result mirage-device)
+<src/mirage_net_lwt.*>: package(result mirage-net lwt io-page cstruct ipaddr)
