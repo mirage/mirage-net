@@ -1,0 +1,4 @@
+PKG mirage-device lwt fmt
+S src/
+S lwt/
+B _build/**

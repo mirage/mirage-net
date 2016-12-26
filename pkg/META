@@ -1,0 +1,7 @@
+description = "Network devices for MirageOS"
+version = "%%VERSION_NUM%%"
+requires = "mirage-device fmt"
+archive(byte)   = "mirage-net.cma"
+archive(native) = "mirage-net.cmxa"
+plugin(byte)    = "mirage-net.cma"
+plugin(native)  = "mirage-net.cmxs"
