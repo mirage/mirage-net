@@ -70,9 +70,7 @@ module type S = sig
   val listen: t -> (buffer -> unit io) -> (unit, error) result io
   (** [listen nf fn] is a blocking operation that calls [fn buf] with
       every packet that is read from the interface. The function can
-      be stopped by calling [disconnect] in the device layer.
-
-      {b XXX}: listen currently runs forever (documentation wrong)! *)
+      be stopped by calling [disconnect] in the device layer. *)
 
   val mac: t -> macaddr
   (** [mac nf] is the MAC address of [nf]. *)
