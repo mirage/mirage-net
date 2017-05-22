@@ -3,7 +3,7 @@
   (public_name mirage-net)
   (libraries   (bytes result mirage-device))
   (modules     (Mirage_net))
-  (flags       (:standard -w "A-4-41-44" -warn-error "+1..49" -safe-string))
+  (flags       (:standard -w "A-4-41-44" -safe-string))
   (wrapped     false)
 ))
 
@@ -12,6 +12,6 @@
   (public_name mirage-net-lwt)
   (libraries   (result mirage-net lwt io-page cstruct ipaddr))
   (modules     (Mirage_net_lwt))
-  (flags       (:standard -w "A-4-41-44" -warn-error "+1..49" -safe-string))
+  (flags       (:standard -w "A-4-41-44" -safe-string))
   (wrapped     false)
 ))
