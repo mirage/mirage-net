@@ -1,7 +1,17 @@
-all:
-	ocaml pkg/pkg.ml build -n mirage-net
-	ocaml pkg/pkg.ml build -n mirage-net-lwt
+
+.PHONY: build clean test
+
+build:
+	jbuilder build @install --dev
+
+test:
+	jbuilder runtest --dev
+
+install:
+	jbuilder install
+
+uninstall:
+	jbuilder uninstall
 
 clean:
-	ocaml pkg/pkg.ml clean -n mirage-net
-	ocaml pkg/pkg.ml clean -n mirage-net-lwt
+	rm -rf _build *.install
