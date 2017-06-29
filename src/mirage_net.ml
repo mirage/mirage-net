@@ -16,8 +16,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open Result
-
 type error = Mirage_device.error
 let pp_error = Mirage_device.pp_error
 
@@ -30,15 +28,15 @@ type stats = {
 
 module Stats = struct
   let create () = { rx_pkts=0l; rx_bytes=0L; tx_pkts=0l; tx_bytes=0L }
-  
+
   let rx t size =
     t.rx_pkts <- Int32.succ t.rx_pkts;
     t.rx_bytes <- Int64.add t.rx_bytes size
-  
+
   let tx t size =
     t.tx_pkts <- Int32.succ t.tx_pkts;
     t.tx_bytes <- Int64.add t.tx_bytes size
-  
+
   let reset t =
     t.rx_bytes <- 0L;
     t.rx_pkts  <- 0l;

@@ -22,8 +22,6 @@
 
     {e Release %%VERSION%% } *)
 
-open Result
-
 type error = Mirage_device.error
 (** The type for IO operation errors *)
 
@@ -87,13 +85,13 @@ end
 module Stats : sig
   val create: unit -> stats
   (** [create ()] returns a fresh set of zeroed counters *)
-  
+
   val rx: stats -> int64 -> unit
   (** [rx t size] records that we received a packet of length [size] *)
-    
+
   val tx: stats -> int64 -> unit
   (** [tx t size] records that we transmitted a packet of length [size] *)
-  
+
   val reset: stats -> unit
   (** [reset t] resets all packet counters in [t] to 0 *)
 end
