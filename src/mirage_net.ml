@@ -16,8 +16,6 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-open Result
-
 type error = Mirage_device.error
 let pp_error = Mirage_device.pp_error
 

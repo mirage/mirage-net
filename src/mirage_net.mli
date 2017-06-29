@@ -22,8 +22,6 @@
 
     {e Release %%VERSION%% } *)
 
-open Result
-
 type error = Mirage_device.error
 (** The type for IO operation errors *)
 
