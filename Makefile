@@ -1,7 +1,7 @@
 .PHONY: build clean test
 
 build:
-	jbuilder build @install --dev
+	jbuilder build --dev
 
 test:
 	jbuilder runtest --dev
@@ -9,8 +9,5 @@ test:
 install:
 	jbuilder install
 
-uninstall:
-	jbuilder uninstall
-
 clean:
-	rm -rf _build *.install
+	jbuilder clean
