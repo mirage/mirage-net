@@ -7,4 +7,5 @@ env:
   - PINS="mirage-net:. mirage-net-lwt:."
   matrix:
   - OCAML_VERSION=4.04 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
+  - OCAML_VERSION=4.05 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
   - OCAML_VERSION=4.06 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
