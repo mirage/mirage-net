@@ -19,5 +19,10 @@ depends: [
   "jbuilder" {build & >="1.0+beta7"}
   "topkg"    {build & >= "0.8.0"}
   "mirage-net" {>= "1.0.0"}
-  "lwt" "ipaddr" "cstruct" "io-page" "result"
+  "lwt"
+  "ipaddr" {>= "1.0.0"}
+  "cstruct"
+  "io-page"
 ]
+
+available: [ ocaml-version >= "4.04.2" ]
