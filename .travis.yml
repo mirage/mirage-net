@@ -1,11 +1,16 @@
 language: c
-sudo: required
-install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-opam.sh
-script: bash -ex .travis-opam.sh
+install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.travis-docker.sh
+script: bash -ex .travis-docker.sh
+services:
+- docker
 env:
   global:
-  - PINS="mirage-net:. mirage-net-lwt:."
+  - PINS="mirage-net-lwt:. mirage-net:."
+  - DISTRO="debian-stable"
   matrix:
-  - OCAML_VERSION=4.04 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
-  - OCAML_VERSION=4.05 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
-  - OCAML_VERSION=4.06 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
+  - PACKAGE="mirage-net-lwt" OCAML_VERSION="4.04.2"
+  - PACKAGE="mirage-net-lwt" OCAML_VERSION="4.05.0"
+  - PACKAGE="mirage-net-lwt" OCAML_VERSION="4.06.0"
+  - PACKAGE="mirage-net" OCAML_VERSION="4.04.2"
+  - PACKAGE="mirage-net" OCAML_VERSION="4.05.0"
+  - PACKAGE="mirage-net" OCAML_VERSION="4.06.0"
