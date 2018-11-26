@@ -2,6 +2,7 @@
  * Copyright (c) 2011-2015 Anil Madhavapeddy <anil@recoil.org>
  * Copyright (c) 2013-2015 Thomas Gazagnaire <thomas@gazagnaire.org>
  * Copyright (c) 2013      Citrix Systems Inc
+ * Copyright (c) 2018      Hannes Mehnert <hannes@mehnert.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -42,42 +43,50 @@ type stats = {
 module type S = sig
 
   type error = private [> Mirage_device.error]
-  (** The type for network errors. *)
+  (** The type for network interface errors. *)
 
   val pp_error: error Fmt.t
   (** [pp_error] is the pretty-printer for errors. *)
-
-  type page_aligned_buffer
-  (** The type for page-aligned memory buffers. *)
 
   type buffer
   (** The type for memory buffers. *)
 
   type macaddr
-  (** The type for unique MAC identifiers for the device. *)
+  (** The type for unique MAC identifiers for the network interface. *)
 
   include Mirage_device.S
 
   val write: t -> buffer -> (unit, error) result io
-  (** [write nf buf] outputs [buf] to netfront [nf]. *)
+  (** [write net buf] outputs [buf] to network interface [net]. *)
 
   val writev: t -> buffer list -> (unit, error) result io
-  (** [writev nf bufs] output a list of buffers to netfront [nf] as a
-      single packet. *)
+  (** [writev net bufs] output a list of buffers to the network interface [net]
+      as a single packet. *)
 
   val listen: t -> (buffer -> unit io) -> (unit, error) result io
-  (** [listen nf fn] is a blocking operation that calls [fn buf] with
+  (** [listen net fn] is a blocking operation that calls [fn buf] with
       every packet that is read from the interface. The function can
       be stopped by calling [disconnect] in the device layer. *)
 
+  val allocate_frame : t -> buffer
+  (** [allocate_frame net] allocates a single frame which can be filled
+      and transmitted via [write] on the same interface [net]. The reason for
+      this function is that the network interface is aware of its
+      memory-alignment requirements (i.e. if it requires page-alignment).
+      Using [write] with a buffer allocated from a different network device
+      leads to undefined behaviour. *)
+
   val mac: t -> macaddr
-  (** [mac nf] is the MAC address of [nf]. *)
+  (** [mac net] is the MAC address of [net]. *)
+
+  val mtu: t -> int
+  (** [mtu net] is the Maximum Transmission Unit of [net]. *)
 
   val get_stats_counters: t -> stats
-  (** Obtain the most recent snapshot of the device statistics. *)
+  (** Obtain the most recent snapshot of the interface statistics. *)
 
   val reset_stats_counters: t -> unit
-  (** Reset the statistics associated with this device to their
+  (** Reset the statistics associated with this interface to their
       defaults. *)
 
 end

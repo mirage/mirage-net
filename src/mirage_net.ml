@@ -2,6 +2,7 @@
  * Copyright (c) 2011-2015 Anil Madhavapeddy <anil@recoil.org>
  * Copyright (c) 2013-2015 Thomas Gazagnaire <thomas@gazagnaire.org>
  * Copyright (c) 2013      Citrix Systems Inc
+ * Copyright (c) 2018      Hannes Mehnert <hannes@mehnert.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -47,14 +48,15 @@ end
 module type S = sig
   type error = private [> Mirage_device.error]
   val pp_error: error Fmt.t
-  type page_aligned_buffer
   type buffer
   type macaddr
   include Mirage_device.S
   val write: t -> buffer -> (unit, error) result io
   val writev: t -> buffer list -> (unit, error) result io
   val listen: t -> (buffer -> unit io) -> (unit, error) result io
+  val allocate_frame : t -> buffer
   val mac: t -> macaddr
+  val mtu: t -> int
   val get_stats_counters: t -> stats
   val reset_stats_counters: t -> unit
 end
