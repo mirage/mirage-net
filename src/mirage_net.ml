@@ -54,7 +54,7 @@ module type S = sig
   val write: t -> buffer -> (unit, error) result io
   val writev: t -> buffer list -> (unit, error) result io
   val listen: t -> (buffer -> unit io) -> (unit, error) result io
-  val allocate_frame : t -> buffer
+  val allocate_frame: ?size:int -> t -> buffer
   val mac: t -> macaddr
   val mtu: t -> int
   val get_stats_counters: t -> stats

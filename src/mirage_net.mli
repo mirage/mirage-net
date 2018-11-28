@@ -68,13 +68,13 @@ module type S = sig
       every packet that is read from the interface. The function can
       be stopped by calling [disconnect] in the device layer. *)
 
-  val allocate_frame : t -> buffer
-  (** [allocate_frame net] allocates a single frame which can be filled
-      and transmitted via [write] on the same interface [net]. The reason for
-      this function is that the network interface is aware of its
-      memory-alignment requirements (i.e. if it requires page-alignment).
-      Using [write] with a buffer allocated from a different network device
-      leads to undefined behaviour. *)
+  val allocate_frame : ?size:int -> t -> buffer
+  (** [allocate_frame ~size net] allocates a single frame of size
+      [min (size mtu)] which can be filled and transmitted via [write] on the
+      same interface [net]. The reason for this function is that the network
+      interface is aware of its memory-alignment requirements (i.e. if it
+      requires page-alignment). Using [write] with a buffer allocated from a
+      different network device leads to undefined behaviour. *)
 
   val mac: t -> macaddr
   (** [mac net] is the MAC address of [net]. *)
