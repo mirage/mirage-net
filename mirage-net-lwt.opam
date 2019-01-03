@@ -23,6 +23,5 @@ depends: [
   "lwt"
   "macaddr"
   "cstruct"
-  "io-page"
 ]
 synopsis: "Network signatures for MirageOS"
