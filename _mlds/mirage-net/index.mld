@@ -1,0 +1,3 @@
+{2 Library mirage-net}
+The entry point of this library is the module:
+{!module-Mirage_net}.

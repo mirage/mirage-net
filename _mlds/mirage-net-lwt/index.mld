@@ -1,0 +1,3 @@
+{2 Library mirage-net-lwt}
+The entry point of this library is the module:
+{!module-Mirage_net_lwt}.
