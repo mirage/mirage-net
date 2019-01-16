@@ -4,7 +4,7 @@ install: wget https://raw.githubusercontent.com/ocaml/ocaml-ci-scripts/master/.t
 script: bash -ex .travis-opam.sh
 env:
   global:
-  - PINS="mirage-net:. mirage-net-lwt:."
+  - PINS="mirage-net.2.0.0:. mirage-net-lwt.2.0.0:."
   matrix:
   - OCAML_VERSION=4.04 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
   - OCAML_VERSION=4.05 PACKAGE="mirage-net" DEPOPTS="mirage-net-lwt"
