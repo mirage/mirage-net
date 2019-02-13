@@ -2,6 +2,7 @@
  * Copyright (c) 2011-2015 Anil Madhavapeddy <anil@recoil.org>
  * Copyright (c) 2013-2015 Thomas Gazagnaire <thomas@gazagnaire.org>
  * Copyright (c) 2013      Citrix Systems Inc
+ * Copyright (c) 2018      Hannes Mehnert <hannes@mehnert.org>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -16,8 +17,13 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *)
 
-type error = Mirage_device.error
-let pp_error = Mirage_device.pp_error
+module Net = struct
+  type error = [ Mirage_device.error | `Exceeds_mtu | `Invalid_length ]
+  let pp_error ppf = function
+    | #Mirage_device.error as e -> Mirage_device.pp_error ppf e
+    | `Exceeds_mtu -> Fmt.string ppf "requested size exceeds mtu"
+    | `Invalid_length -> Fmt.string ppf "invalid length exceeds mtu"
+end
 
 type stats = {
   mutable rx_bytes: int64;
@@ -45,16 +51,15 @@ module Stats = struct
 end
 
 module type S = sig
-  type error = private [> Mirage_device.error]
+  type error = private [> Net.error ]
   val pp_error: error Fmt.t
-  type page_aligned_buffer
   type buffer
   type macaddr
   include Mirage_device.S
-  val write: t -> buffer -> (unit, error) result io
-  val writev: t -> buffer list -> (unit, error) result io
+  val write: t -> ?size:int -> (buffer -> int) -> (unit, error) result io
   val listen: t -> (buffer -> unit io) -> (unit, error) result io
   val mac: t -> macaddr
+  val mtu: t -> int
   val get_stats_counters: t -> stats
   val reset_stats_counters: t -> unit
 end
