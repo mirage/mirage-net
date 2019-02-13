@@ -11,13 +11,13 @@ tags:          [ "org:mirage"]
 license:       "ISC"
 
 build: [
-  ["jbuilder" "subst" "-p" name] {pinned}
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 
 depends: [
   "ocaml" {>= "4.04.2"}
-  "jbuilder" {build & >="1.0+beta10"}
+  "dune" {build & >= "1.0"}
   "mirage-device" {>= "1.0.0"}
   "fmt"
 ]
