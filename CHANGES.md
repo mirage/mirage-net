@@ -1,11 +1,12 @@
-### v2.0.0 (2019-02-13)
+### v2.0.0 (2019-02-24)
 
-- Improvements to the write path (#15 @hannesm)
-  * error extended with `Exceeds_mtu`
+- Improvements to the write path (#15, #18 @hannesm)
   * remove `page_aligned_buffer` and `io-page` dependency
   * remove `writev`
   * provide `mtu : t -> int`
-  * adjust `write : t -> ?size:int -> (buffer -> int) -> (unit, error) result io`
+  * adjust `write : t -> size:int -> (buffer -> int) -> (unit, error) result io`
+   -> allocation is done by the mirage-net implementation, and the buffer is
+      filled by the upper layers. once filled, it is send out.
 - Port build to dune from jbuilder (#16 @avsm)
 - Switch to dune-release instead of topkg (#16 @avsm)
 
