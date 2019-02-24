@@ -39,7 +39,7 @@ type stats = {
 }
 (** The type for frame statistics to track the usage of the device. *)
 
-(** {1 Networking} *)
+(** {2 Networking} *)
 
 (** A network interface that serves Ethernet frames. *)
 module type S = sig
