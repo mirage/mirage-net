@@ -24,7 +24,7 @@
     {e Release %%VERSION%% } *)
 
 module Net : sig
-  type error = [ Mirage_device.error | `Exceeds_mtu | `Invalid_length ]
+  type error = [ Mirage_device.error | `Invalid_length ]
   (** The type for IO operation errors *)
 
   val pp_error: error Fmt.t
@@ -58,25 +58,27 @@ module type S = sig
 
   include Mirage_device.S
 
-  val write: t -> ?size:int -> (buffer -> int) -> (unit, error) result io
-  (** [write net ~size fill] allocates a buffer of length [size + header_size],
-     where [size] must not exceed {!mtu} (defaults to mtu). The allocated buffer
-     is zeroed and passed to the [fill] function which returns the payload
-     length, which may not exceed the length of the buffer. When [fill] returns,
-     a sub buffer is put on the wire: the allocated buffer from index 0 to the
-     returned length. *)
+  val write: t -> size:int -> (buffer -> int) -> (unit, error) result io
+  (** [write net ~size fill] allocates a buffer of length [size], where [size]
+     must not exceed the interface maximum packet size ({!mtu} plus Ethernet
+     header). The allocated buffer is zeroed and passed to the [fill] function
+     which returns the payload length, which may not exceed the length of the
+     buffer. When [fill] returns, a sub buffer is put on the wire: the allocated
+     buffer from index 0 to the returned length. *)
 
-  val listen: t -> (buffer -> unit io) -> (unit, error) result io
-  (** [listen net fn] waits for a [packet] on the network device. When a
-     [packet] is received, an asynchronous task is created in which [fn packet]
-     is called. The ownership of [packet] is transferred to [fn].  The function
-     can be stopped by calling [disconnect] in the device layer. *)
+  val listen: t -> header_size:int -> (buffer -> unit io) -> (unit, error) result io
+  (** [listen ~header_size net fn] waits for a [packet] with size at most
+     [header_size + mtu] on the network device. When a [packet] is received, an
+     asynchronous task is created in which [fn packet] is called. The ownership
+     of [packet] is transferred to [fn].  The function can be stopped by calling
+     [disconnect] in the device layer. *)
 
   val mac: t -> macaddr
   (** [mac net] is the MAC address of [net]. *)
 
   val mtu: t -> int
-  (** [mtu net] is the Maximum Transmission Unit of [net]. *)
+  (** [mtu net] is the Maximum Transmission Unit of [net]. This excludes the
+     Ethernet header. *)
 
   val get_stats_counters: t -> stats
   (** Obtain the most recent snapshot of the interface statistics. *)
