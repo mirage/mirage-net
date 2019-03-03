@@ -22,3 +22,6 @@ depends: [
   "fmt"
 ]
 synopsis: "Network signatures for MirageOS"
+description: """
+mirage-net defines `Mirage_net.S`, the signature for network operations for MirageOS.
+"""

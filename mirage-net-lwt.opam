@@ -24,3 +24,6 @@ depends: [
   "cstruct"
 ]
 synopsis: "Network signatures for MirageOS"
+description: """
+mirage-net-lwt defines `Mirage_net_lwt.S`, the signature for network operations for MirageOS constrained to Lwt.
+"""
