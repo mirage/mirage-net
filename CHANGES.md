@@ -1,3 +1,8 @@
+### v3.0.0
+
+- remove mirage-net-lwt
+- specialise to Lwt.t, Cstruct.t, Macaddr.t
+
 ### v2.0.0 (2019-02-24)
 
 - Improvements to the write path (#15, #18 @hannesm)
