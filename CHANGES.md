@@ -1,3 +1,9 @@
+### v3.0.0 (2019-10-22)
+
+- remove mirage-net-lwt (#21 @hannesm)
+- specialise to Lwt.t, Cstruct.t, Macaddr.t (#21 @hannesm)
+- raise lower OCaml bound to 4.06.0 (#21 @hannesm)
+
 ### v2.0.0 (2019-02-24)
 
 - Improvements to the write path (#15, #18 @hannesm)

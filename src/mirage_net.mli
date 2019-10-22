@@ -50,15 +50,9 @@ module type S = sig
   val pp_error: error Fmt.t
   (** [pp_error] is the pretty-printer for errors. *)
 
-  type buffer
-  (** The type for memory buffers. *)
-
-  type macaddr
-  (** The type for unique MAC identifiers for the network interface. *)
-
   include Mirage_device.S
 
-  val write: t -> size:int -> (buffer -> int) -> (unit, error) result io
+  val write: t -> size:int -> (Cstruct.t -> int) -> (unit, error) result Lwt.t
   (** [write net ~size fill] allocates a buffer of length [size], where [size]
      must not exceed the interface maximum packet size ({!mtu} plus Ethernet
      header). The allocated buffer is zeroed and passed to the [fill] function
@@ -66,14 +60,14 @@ module type S = sig
      buffer. When [fill] returns, a sub buffer is put on the wire: the allocated
      buffer from index 0 to the returned length. *)
 
-  val listen: t -> header_size:int -> (buffer -> unit io) -> (unit, error) result io
+  val listen: t -> header_size:int -> (Cstruct.t -> unit Lwt.t) -> (unit, error) result Lwt.t
   (** [listen ~header_size net fn] waits for a [packet] with size at most
      [header_size + mtu] on the network device. When a [packet] is received, an
      asynchronous task is created in which [fn packet] is called. The ownership
      of [packet] is transferred to [fn].  The function can be stopped by calling
      [disconnect] in the device layer. *)
 
-  val mac: t -> macaddr
+  val mac: t -> Macaddr.t
   (** [mac net] is the MAC address of [net]. *)
 
   val mtu: t -> int

@@ -52,12 +52,10 @@ end
 module type S = sig
   type error = private [> Net.error ]
   val pp_error: error Fmt.t
-  type buffer
-  type macaddr
   include Mirage_device.S
-  val write: t -> size:int -> (buffer -> int) -> (unit, error) result io
-  val listen: t -> header_size:int -> (buffer -> unit io) -> (unit, error) result io
-  val mac: t -> macaddr
+  val write: t -> size:int -> (Cstruct.t -> int) -> (unit, error) result Lwt.t
+  val listen: t -> header_size:int -> (Cstruct.t -> unit Lwt.t) -> (unit, error) result Lwt.t
+  val mac: t -> Macaddr.t
   val mtu: t -> int
   val get_stats_counters: t -> stats
   val reset_stats_counters: t -> unit
