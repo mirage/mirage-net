@@ -23,7 +23,6 @@ depends: [
   "macaddr" {>= "4.0.0"}
   "cstruct" {>= "4.0.0"}
 ]
-conflicts: [ "mirage-net-lwt" ]
 synopsis: "Network signatures for MirageOS"
 description: """
 mirage-net defines `Mirage_net.S`, the signature for network operations for MirageOS.
