@@ -8,6 +8,7 @@ env:
   global:
   - PACKAGE=mirage-net
   - DISTRO=alpine
+  - REVDEPS=true
   matrix:
   - OCAML_VERSION=4.06
   - OCAML_VERSION=4.07

@@ -22,6 +22,7 @@ depends: [
   "fmt"
   "macaddr" {>= "4.0.0"}
   "cstruct" {>= "4.0.0"}
+  "lwt" {>= "4.0.0"}
 ]
 synopsis: "Network signatures for MirageOS"
 description: """
