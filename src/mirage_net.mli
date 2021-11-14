@@ -24,7 +24,7 @@
     {e Release %%VERSION%% } *)
 
 module Net : sig
-  type error = [ Mirage_device.error | `Invalid_length ]
+  type error = [ `Invalid_length ]
   (** The type for IO operation errors *)
 
   val pp_error: error Fmt.t
@@ -50,7 +50,12 @@ module type S = sig
   val pp_error: error Fmt.t
   (** [pp_error] is the pretty-printer for errors. *)
 
-  include Mirage_device.S
+  type t
+  (** The type representing the internal state of the network device. *)
+
+  val disconnect: t -> unit Lwt.t
+  (** Disconnect from the network device. While this might take some time to
+      complete, it can never result in an error. *)
 
   val write: t -> size:int -> (Cstruct.t -> int) -> (unit, error) result Lwt.t
   (** [write net ~size fill] allocates a buffer of length [size], where [size]
@@ -65,7 +70,7 @@ module type S = sig
      [header_size + mtu] on the network device. When a [packet] is received, an
      asynchronous task is created in which [fn packet] is called. The ownership
      of [packet] is transferred to [fn].  The function can be stopped by calling
-     [disconnect] in the device layer. *)
+     {!disconnect}. *)
 
   val mac: t -> Macaddr.t
   (** [mac net] is the MAC address of [net]. *)
