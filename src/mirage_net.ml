@@ -18,9 +18,8 @@
  *)
 
 module Net = struct
-  type error = [ Mirage_device.error | `Invalid_length ]
+  type error = [ `Invalid_length ]
   let pp_error ppf = function
-    | #Mirage_device.error as e -> Mirage_device.pp_error ppf e
     | `Invalid_length -> Fmt.string ppf "invalid length (exceeds size)"
 end
 
@@ -52,7 +51,8 @@ end
 module type S = sig
   type error = private [> Net.error ]
   val pp_error: error Fmt.t
-  include Mirage_device.S
+  type t
+  val disconnect : t -> unit Lwt.t
   val write: t -> size:int -> (Cstruct.t -> int) -> (unit, error) result Lwt.t
   val listen: t -> header_size:int -> (Cstruct.t -> unit Lwt.t) -> (unit, error) result Lwt.t
   val mac: t -> Macaddr.t

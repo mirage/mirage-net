@@ -1,3 +1,8 @@
+### v4.0.0
+
+- remove dependency on mirage-device
+- remove Mirage_net_lwt module
+
 ### v3.0.1 (2019-11-04)
 
 - provide deprecated Mirage_net_lwt for smooth transition (#23 @hannesm)
