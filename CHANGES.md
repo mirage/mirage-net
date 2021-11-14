@@ -1,7 +1,7 @@
-### v4.0.0
+### v4.0.0 (2021-11-15)
 
-- remove dependency on mirage-device
-- remove Mirage_net_lwt module
+- remove dependency on mirage-device (#24 @hannesm)
+- remove Mirage_net_lwt module (#24 @hannesm)
 
 ### v3.0.1 (2019-11-04)
 
