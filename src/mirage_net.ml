@@ -18,9 +18,10 @@
  *)
 
 module Net = struct
-  type error = [ `Invalid_length ]
+  type error = [ `Invalid_length | `Disconnected ]
   let pp_error ppf = function
     | `Invalid_length -> Fmt.string ppf "invalid length (exceeds size)"
+    | `Disconnected -> Fmt.string ppf "network device is disconnected"
 end
 
 type stats = {
