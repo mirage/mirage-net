@@ -54,8 +54,8 @@ module type S = sig
   val pp_error: error Fmt.t
   type t
   val disconnect : t -> unit Lwt.t
-  val write: t -> size:int -> (Cstruct.t -> int) -> (unit, error) result Lwt.t
-  val listen: t -> header_size:int -> (Cstruct.t -> unit Lwt.t) -> (unit, error) result Lwt.t
+  val write: t -> size:int -> (bytes -> int) -> (unit, error) result Lwt.t
+  val listen: t -> header_size:int -> (string -> unit Lwt.t) -> (unit, error) result Lwt.t
   val mac: t -> Macaddr.t
   val mtu: t -> int
   val get_stats_counters: t -> stats
