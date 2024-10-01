@@ -65,7 +65,7 @@ module type S = sig
      buffer. When [fill] returns, a sub buffer is put on the wire: the allocated
      buffer from index 0 to the returned length. *)
 
-  val listen: t -> header_size:int -> (Bytes.t -> unit Lwt.t) -> (unit, error) result Lwt.t
+  val listen: t -> header_size:int -> (string -> unit Lwt.t) -> (unit, error) result Lwt.t
   (** [listen ~header_size net fn] waits for a [packet] with size at most
      [header_size + mtu] on the network device. When a [packet] is received, an
      asynchronous task is created in which [fn packet] is called. The ownership
