@@ -24,7 +24,7 @@
     {e Release %%VERSION%% } *)
 
 module Net : sig
-  type error = [ `Invalid_length ]
+  type error = [ `Invalid_length | `Disconnected ]
   (** The type for IO operation errors *)
 
   val pp_error: error Fmt.t
