@@ -57,7 +57,7 @@ module type S = sig
   (** Disconnect from the network device. While this might take some time to
       complete, it can never result in an error. *)
 
-  val write: t -> size:int -> (Cstruct.t -> int) -> (unit, error) result Lwt.t
+  val write: t -> size:int -> (bytes -> int) -> (unit, error) result Lwt.t
   (** [write net ~size fill] allocates a buffer of length [size], where [size]
      must not exceed the interface maximum packet size ({!mtu} plus Ethernet
      header). The allocated buffer is zeroed and passed to the [fill] function
@@ -65,7 +65,7 @@ module type S = sig
      buffer. When [fill] returns, a sub buffer is put on the wire: the allocated
      buffer from index 0 to the returned length. *)
 
-  val listen: t -> header_size:int -> (Cstruct.t -> unit Lwt.t) -> (unit, error) result Lwt.t
+  val listen: t -> header_size:int -> (string -> unit Lwt.t) -> (unit, error) result Lwt.t
   (** [listen ~header_size net fn] waits for a [packet] with size at most
      [header_size + mtu] on the network device. When a [packet] is received, an
      asynchronous task is created in which [fn packet] is called. The ownership
